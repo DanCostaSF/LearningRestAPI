@@ -2,34 +2,13 @@ package com.ocanha.retrofitcomkotlin.repositories
 
 import android.util.Log
 import com.ocanha.retrofitcomkotlin.model.Recipe
+import com.ocanha.retrofitcomkotlin.rest.RetrofitService
 
-class RecipeRepository {
+class RecipeRepository(private val retrofitService: RetrofitService) {
 
-    fun saveRecipe(recipe: Recipe) {
 
-        //Salvar receita
-        Log.i("Kaique", recipe.toString())
+    fun saveRecipe(recipe: Recipe) = retrofitService.saveRecipe(recipe)
 
-    }
-
-    fun getAllRecipes(): List<Recipe> {
-
-        val recipes = mutableListOf<Recipe>()
-
-        for (i in 1..10) {
-            recipes.add(
-                Recipe(
-                    "Kaique Ocanha",
-                    i.toString(),
-                    "2 xícaras de trigo. 3 colheres de açucar. 2 colheres de manteiga.",
-                    "Bolo de Cenoura",
-                    "Doce"
-                )
-            )
-        }
-
-        return recipes
-
-    }
+    fun getAllRecipes() = retrofitService.getAllRecipes()
 
 }
