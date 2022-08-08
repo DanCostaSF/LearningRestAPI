@@ -19,16 +19,14 @@ class NewRecipeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNewRecipeBinding
     private lateinit var viewModel: NewRecipeViewModel
-    private val retrofitService = RetrofitService.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewRecipeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, NewRecipeViewModelFactory(RecipeRepository(retrofitService))).get(
-            NewRecipeViewModel::class.java
-        )
+        viewModel = ViewModelProvider(this,
+            NewRecipeViewModelFactory())[NewRecipeViewModel::class.java]
 
         setupUi()
 

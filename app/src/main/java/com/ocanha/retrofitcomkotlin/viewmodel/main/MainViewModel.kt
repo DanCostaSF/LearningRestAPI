@@ -2,42 +2,31 @@ package com.ocanha.retrofitcomkotlin.viewmodel.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ocanha.retrofitcomkotlin.model.Recipe
 import com.ocanha.retrofitcomkotlin.repositories.RecipeRepository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.ocanha.retrofitcomkotlin.rest.utils.Result
+import kotlinx.coroutines.launch
 
 
-class MainViewModel constructor(private val repository: RecipeRepository) : ViewModel() {
 
+class MainViewModel : ViewModel() {
+
+    private val repository = RecipeRepository.getInstance()
     val recipesList = MutableLiveData<List<Recipe>>()
     val errorMessage = MutableLiveData<String>()
 
     fun getAllRecipes() {
-
-        val request = this.repository.getAllRecipes()
-        request.enqueue(object : Callback<List<Recipe>> {
-            override fun onResponse(call: Call<List<Recipe>>, response: Response<List<Recipe>>) {
-
-                if (response.code() == 200) {
-
-                    recipesList.postValue(response.body())
-
-                } else {
-
-                    errorMessage.postValue("Erro ao listar receitas ${response.code()}")
-
+        viewModelScope.launch {
+            when(val response = repository.getAllRecipes()) {
+                is Result.Success -> {
+                    recipesList.postValue(response.data ?: emptyList())
                 }
-
+                is Result.Error -> {
+                    errorMessage.postValue(response.error ?: "")
+                }
             }
-
-            override fun onFailure(call: Call<List<Recipe>>, t: Throwable) {
-                errorMessage.postValue(t.message)
-            }
-
-        })
-
+        }
 
     }
 

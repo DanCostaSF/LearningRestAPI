@@ -1,40 +1,44 @@
 package com.ocanha.retrofitcomkotlin.viewmodel.newrecipe
 
-import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ocanha.retrofitcomkotlin.model.Recipe
 import com.ocanha.retrofitcomkotlin.repositories.RecipeRepository
-import com.ocanha.retrofitcomkotlin.rest.RetrofitService
+import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NewRecipeViewModel constructor(private val repository: RecipeRepository) : ViewModel() {
+class NewRecipeViewModel : ViewModel() {
 
+    private val repository = RecipeRepository.getInstance()
     val status = MutableLiveData<Boolean>()
 
     fun saveRecipe(recipe: Recipe) {
+        viewModelScope.launch {
+            val request = repository.saveRecipe(recipe)
+            request.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
 
-        val request = repository.saveRecipe(recipe)
+                    if (response.code() == 200) {
+                        status.postValue(true)
+                    } else {
+                        status.postValue(false)
+                    }
 
-        request.enqueue(object: Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                }
 
-                if (response.code() == 200) {
-                    status.postValue(true)
-                } else {
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     status.postValue(false)
                 }
 
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                status.postValue(false)
-            }
-
-        })
+            })
+        }
 
     }
 
