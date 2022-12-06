@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Receitas</string>
+    <string name="cadastrar_receitas">Sem receitas cadastradas.\nCadastre a primeira!</string>
+    <string name="nome_da_receita">Nome da receita</string>
+    <string name="autor">Autor</string>
+    <string name="ingredientes">Ingredientes</string>
+    <string name="doce">Doce</string>
+    <string name="salgada">Salgada</string>
+    <string name="tipo_da_receita">Tipo da receita:</string>
 </resources>

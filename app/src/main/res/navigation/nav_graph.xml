@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/recipesFragment">
+
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="com.ocanha.retrofitcomkotlin.presentation.recipes.RecipesFragment"
+        android:label="RecipesFragment"
+        tools:layout="@layout/fragment_recipes">
+        <action
+            android:id="@+id/action_recipesFragment_to_fragmentNewRecipes"
+            app:destination="@id/fragmentNewRecipes" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentNewRecipes"
+        android:name="com.ocanha.retrofitcomkotlin.presentation.newrecipes.NewRecipesFragment"
+        android:label="FragmentNewRecipes" />
+</navigation>

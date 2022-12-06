@@ -7,6 +7,7 @@
 
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RetrofitComKotlin">
         <activity
-            android:name=".views.NewRecipeActivity"
+            android:name=".naoutilizado.adapters.views.NewRecipeActivity"
             android:exported="true" />
         <activity
-            android:name=".views.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
