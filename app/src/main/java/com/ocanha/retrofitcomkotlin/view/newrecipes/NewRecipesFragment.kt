@@ -3,10 +3,8 @@ package com.ocanha.retrofitcomkotlin.view.newrecipes
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import com.ocanha.retrofitcomkotlin.R
 import com.ocanha.retrofitcomkotlin.commons.BaseFragment
-import com.ocanha.retrofitcomkotlin.commons.navBack
 import com.ocanha.retrofitcomkotlin.data.model.Recipe
 import com.ocanha.retrofitcomkotlin.databinding.FragmentNewRecipesBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,7 +13,7 @@ class NewRecipesFragment : BaseFragment<FragmentNewRecipesBinding>(
     R.layout.fragment_new_recipes
 ) {
 
-    private val vm: NewRecipesViewModel by viewModel()
+    private val viewModel: NewRecipesViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,11 +21,11 @@ class NewRecipesFragment : BaseFragment<FragmentNewRecipesBinding>(
     }
 
     override fun setupViewModel() {
-        binding.vm = vm
+        binding.vm = viewModel
     }
 
     override fun setupObservers() {
-        vm.status.observe(viewLifecycleOwner) {
+        viewModel.status.observe(viewLifecycleOwner) {
             if (it) {
                 Toast.makeText(
                     requireContext(),
@@ -92,11 +90,9 @@ class NewRecipesFragment : BaseFragment<FragmentNewRecipesBinding>(
                     ingredients = edtRecipeIngredients.text.toString()
                 )
 
-//                loadingView.show()
                 fabNewRecipe.visibility = View.GONE
-                vm?.let {
-                    it.saveRecipe(recipe)
-                }
+                viewModel.saveRecipe(recipe)
+
             }
         }
     }
