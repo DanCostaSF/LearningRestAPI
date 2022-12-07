@@ -1,22 +1,22 @@
-package com.ocanha.retrofitcomkotlin.naoutilizado.adapters.viewmodel.main
+package com.ocanha.retrofitcomkotlin.view.recipes
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ocanha.retrofitcomkotlin.data.model.Recipe
-import com.ocanha.retrofitcomkotlin.naoutilizado.adapters.repositories.RecipeRepository
 import com.ocanha.retrofitcomkotlin.commons.Result
+import com.ocanha.retrofitcomkotlin.data.model.Recipe
+import com.ocanha.retrofitcomkotlin.data.usescase.RecipeUseCase
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
-
-    private val repository = RecipeRepository.getInstance()
+class RecipesViewModel(
+    private val usecase: RecipeUseCase
+) : ViewModel() {
     val recipesList = MutableLiveData<List<Recipe>>()
     val errorMessage = MutableLiveData<String>()
 
     fun getAllRecipes() {
         viewModelScope.launch {
-            when(val response = repository.getAllRecipes()) {
+            when(val response = usecase.getRecipes()) {
                 is Result.Success -> {
                     recipesList.postValue(response.data ?: emptyList())
                 }

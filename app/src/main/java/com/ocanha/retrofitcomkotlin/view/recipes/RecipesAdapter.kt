@@ -1,4 +1,4 @@
-package com.ocanha.retrofitcomkotlin.presentation.recipes
+package com.ocanha.retrofitcomkotlin.view.recipes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

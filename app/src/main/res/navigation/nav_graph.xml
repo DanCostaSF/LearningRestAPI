@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/recipesFragment"
-        android:name="com.ocanha.retrofitcomkotlin.presentation.recipes.RecipesFragment"
+        android:name="com.ocanha.retrofitcomkotlin.view.recipes.RecipesFragment"
         android:label="RecipesFragment"
         tools:layout="@layout/fragment_recipes">
         <action
@@ -16,6 +16,6 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentNewRecipes"
-        android:name="com.ocanha.retrofitcomkotlin.presentation.newrecipes.NewRecipesFragment"
+        android:name="com.ocanha.retrofitcomkotlin.view.newrecipes.NewRecipesFragment"
         android:label="FragmentNewRecipes" />
 </navigation>
