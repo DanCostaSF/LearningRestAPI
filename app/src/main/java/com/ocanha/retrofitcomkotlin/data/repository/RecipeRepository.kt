@@ -7,5 +7,5 @@ import retrofit2.Call
 
 interface RecipeRepository  {
     suspend fun getRecipes() : Result<List<Recipe>>
-    suspend fun saveRecipe(recipe: Recipe): Call<ResponseBody>
+    suspend fun saveRecipe(recipe: Recipe): Unit
 }

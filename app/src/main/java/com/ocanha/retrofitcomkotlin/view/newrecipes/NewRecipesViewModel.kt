@@ -1,5 +1,6 @@
 package com.ocanha.retrofitcomkotlin.view.newrecipes
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,23 +19,13 @@ class NewRecipesViewModel(
 
     fun saveRecipe(recipe: Recipe) {
         viewModelScope.launch {
-            val request = usecase.saveRecipe(recipe)
-            request.enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.code() == 200) {
-                        status.postValue(true)
-                    } else {
-                        status.postValue(false)
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    status.postValue(false)
-                }
-            })
+            try {
+                usecase.saveRecipe(recipe)
+                status.value = true
+            } catch (e: Exception) {
+                status.value = false
+                Log.i("error newrecipesvm", "$e")
+            }
         }
     }
 }

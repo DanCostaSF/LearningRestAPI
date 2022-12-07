@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import com.ocanha.retrofitcomkotlin.R
 import com.ocanha.retrofitcomkotlin.commons.BaseFragment
+import com.ocanha.retrofitcomkotlin.commons.navBack
 import com.ocanha.retrofitcomkotlin.data.model.Recipe
 import com.ocanha.retrofitcomkotlin.databinding.FragmentNewRecipesBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,6 +33,7 @@ class NewRecipesFragment : BaseFragment<FragmentNewRecipesBinding>(
                     "Receita salva com sucesso!",
                     Toast.LENGTH_SHORT
                 ).show()
+                navBack()
             } else {
                 Toast.makeText(
                     requireContext(),
