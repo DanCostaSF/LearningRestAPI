@@ -21,20 +21,8 @@ class RecipesFragment : BaseFragment<FragmentRecipesBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupFab()
         setupRecycler()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    //        this.binding.loadingView.show()
         vm.getAllRecipes()
-    }
-
-    private fun setupFab() = binding.apply {
-        fabNewRecipe.setOnClickListener {
-            navTo(RecipesFragmentDirections.actionRecipesFragmentToFragmentNewRecipes())
-        }
     }
 
     private fun setupRecycler() = binding.apply {
@@ -54,30 +42,17 @@ class RecipesFragment : BaseFragment<FragmentRecipesBinding>(
 
     override fun setupObservers() {
         vm.recipesList.observe(viewLifecycleOwner){ recipes ->
-//            this.binding.loadingView.dismiss()
-            updateRecipesList(recipes)
+            adapter.setRecipesList(recipes)
         }
 
         vm.errorMessage.observe(viewLifecycleOwner) {
-//            this.binding.loadingView.dismiss()
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-            updateRecipesList(listOf())
         }
-    }
 
-    private fun updateRecipesList(recipes: List<Recipe>) {
-
-        adapter.setRecipesList(recipes)
-
-        binding.apply {
-            if (recipes.isEmpty()) {
-                rvRecipes.visibility = View.GONE
-                imgNoRecipes.visibility = View.VISIBLE
-                tvNoRecipes.visibility = View.VISIBLE
-            } else {
-                rvRecipes.visibility = View.VISIBLE
-                imgNoRecipes.visibility = View.GONE
-                tvNoRecipes.visibility = View.GONE
+        vm.navigateToNewRecipe.observe(viewLifecycleOwner) {
+            if (it) {
+                navTo(RecipesFragmentDirections.actionRecipesFragmentToFragmentNewRecipes())
+                vm.navigateOff()
             }
         }
     }

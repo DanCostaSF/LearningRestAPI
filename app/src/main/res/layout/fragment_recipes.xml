@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.ocanha.retrofitcomkotlin.view.recipes.RecipesViewModel" />
@@ -17,25 +18,15 @@
             android:id="@+id/img_no_recipes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            isVisibleOrGone="@{vm.imageAndTextNoRecipes}"
             android:layout_marginTop="-120dp"
             android:alpha="0.5"
             android:src="@drawable/sad"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!--    <ImageView-->
-        <!--        android:id="@+id/img_no_recipes_2"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_marginStart="30dp"-->
-        <!--        android:layout_marginTop="20dp"-->
-        <!--        android:alpha="0.5"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintTop_toBottomOf="tv_no_recipes"-->
-        <!--        app:srcCompat="@drawable/arrow"/>-->
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/tv_no_recipes"
@@ -44,6 +35,7 @@
             android:layout_marginTop="30dp"
             android:alpha="0.7"
             android:gravity="center"
+            isVisibleOrGone="@{vm.imageAndTextNoRecipes}"
             android:text="@string/cadastrar_receitas"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,10 +47,11 @@
             android:id="@+id/rv_recipes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/res_item_recipes"
-            tools:itemCount="2"
+            isVisibleOrGone="@{vm.recyclerVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="2"
+            tools:listitem="@layout/res_item_recipes" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_new_recipe"
@@ -66,13 +59,25 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:clickable="true"
+            android:onClick="@{() -> vm.navigateOn()}"
+            android:contentDescription="@string/todo"
             android:focusable="true"
             android:src="@drawable/plus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@color/white"
             tools:layout_editor_absoluteX="165dp"
-            tools:layout_editor_absoluteY="241dp"
-            android:contentDescription="TODO" />
+            tools:layout_editor_absoluteY="241dp" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            isVisibility="@{vm.progressBar}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
